@@ -1,7 +1,7 @@
 <template>
   <div class="text">
     <template v-if="childDataLoaded">
-      <add-team-form :team=team :messageTitle=messageTitle :finilized=finalized :teamNameLabel=team.teamName :teamSportLabel=team.teamSport :teamLeagueLabel=team.teamLeague :numberOfPitchesLabel=team.numberOfPitches :primaryButton=primaryButton @team-is-created-updated="updateTeam"></add-team-form>
+      <add-team-form :team=team :messageTitle=messageTitle :finalized=finalized :teamNameLabel=team.teamName :teamSportLabel=team.teamSport :teamLeagueLabel=team.teamLeague :numberOfPitchesLabel=team.numberOfPitches :primaryButton=primaryButton @team-is-created-updated="updateTeam"></add-team-form>
     </template>
   </div>
 </template>
@@ -11,7 +11,6 @@
   import addTeamForm from '@/components/addTeamForm'
 
   export default {
-    props: [],
     data () {
       return {
         team: this.team,
@@ -45,7 +44,8 @@
       updateTeam: function (team) {
         teamService.updateTeam(this.$router.params, team)
           .then(response => {
-            console.log(response)
+            console.log(response);
+            this.$router.push('Teams')
           })
           .catch(error => {
             this.errors.push(error);

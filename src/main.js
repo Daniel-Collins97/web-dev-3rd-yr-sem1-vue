@@ -6,11 +6,23 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import Swal from 'vue-sweetalert2'
+import VueSweetAlert2 from 'vue-sweetalert2'
+import firebase from 'firebase'
+
+var config = {
+  apiKey: "AIzaSyAzS4Nf4xINUVOCMyu0GGSeMPJsVfs7AUI",
+  authDomain: "vue-proj-b3032.firebaseapp.com",
+  databaseURL: "https://vue-proj-b3032.firebaseio.com",
+  projectId: "vue-proj-b3032",
+  storageBucket: "vue-proj-b3032.appspot.com",
+  messagingSenderId: "73216819675"
+};
+
+firebase.initializeApp(config);
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
-Vue.use(Swal);
+Vue.use(VueSweetAlert2);
 
 /* eslint-disable no-new */
 new Vue({

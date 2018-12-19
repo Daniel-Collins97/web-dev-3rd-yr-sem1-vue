@@ -10,6 +10,8 @@ import addPitch from '@/components/addPitch'
 import editTeam from '@/components/editTeam'
 import editPlayer from '@/components/editPlayer'
 import editPitch from '@/components/editPitch'
+import login from '@/components/login'
+import signUp from '@/components/signUp'
 
 Vue.use(Router);
 
@@ -66,6 +68,18 @@ export default new Router({
       path: '/editPitch',
       name: 'EditPitch',
       component: editPitch,
+      props: true
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: login,
+      props: true
+    },
+    {
+      path: '/signUp',
+      name: 'SignUp',
+      component: signUp,
       props: true
     }
     ]

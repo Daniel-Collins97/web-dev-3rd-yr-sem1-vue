@@ -45,6 +45,7 @@
         pitchService.updatePitch(this.$router.params, pitch)
           .then(response => {
             console.log(response)
+            this.$router.push('Pitches')
           })
           .catch(error => {
             this.errors.push(error);

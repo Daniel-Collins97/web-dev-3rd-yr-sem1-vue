@@ -45,6 +45,7 @@
         playerService.updatePlayer(this.$router.params, player)
           .then(response => {
             console.log(response)
+            this.$router.push('Players')
           })
           .catch(error => {
             this.errors.push(error);

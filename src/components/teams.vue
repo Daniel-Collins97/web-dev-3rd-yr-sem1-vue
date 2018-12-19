@@ -25,10 +25,16 @@
 
   export default {
     name: 'Teams',
-    data () {
+    data() {
       return {
         messagetitle: ' Current Teams ',
-        teams: [{"_id": Number, "teamName": String, "teamLeague": Number, "teamSport": String, "numberOfPitches": Number}],
+        teams: [{
+          "_id": Number,
+          "teamName": String,
+          "teamLeague": Number,
+          "teamSport": String,
+          "numberOfPitches": Number
+        }],
         errors: [],
         columns: ['_id', 'teamName', 'teamLeague', 'teamSport', 'numberOfPitches', 'delete', 'edit'],
         props: ['_id'],
@@ -48,7 +54,7 @@
       }
     },
     // Fetches Teams when the component is created.
-    created () {
+    created() {
       this.loadTeams()
     },
     methods: {
@@ -70,33 +76,58 @@
           text: 'You can\'t Undo this action',
           type: 'warning',
           showCancelButton: true,
-          confirmButtonText: 'OK, Delete',
+          confirmButtonText: 'OK Delete it',
+          cancelButtonText: 'Cancel',
+          showCloseButton: true,
+          showLoaderOnConfirm: true
+        }).then(success => {
+
+          if (success) {
+            teamService.deleteTeam(id)
+              .then((response) => {
+                this.message = response.data;
+                console.log(this.message);
+                this.loadTeams();
+                Vue.nextTick(() => this.$refs.vuetable.refresh())
+                this.$swal('Deleted', 'Team Go  Bye Bye...', 'success')
+              }).catch((response) => {
+              // do something with response (it failed)
+              console.log(response);
+            });
+          }
+        });
+      },
+      /*      deleteTeam: function (id) {
+        this.$swal({
+          title: 'Are you sure?',
+          text: 'You can\'t Undo this action',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'OK Delete it',
           cancelButtonText: 'Cancel',
           showCloseButton: true,
           showLoaderOnConfirm: true
         }).then((result) => {
-          console.log('SWAL Result : ' + result);
+          console.log('SWAL Result : ' + result)
           if (result.value === true) {
             teamService.deleteTeam(id)
               .then(response => {
                 // JSON responses are automatically parsed.
-                this.message = response.data;
-                console.log(this.message);
-                this.loadTeams();
+                this.message = response.data
+                console.log(this.message)
+                this.loadTeams()
                 // Vue.nextTick(() => this.$refs.vuetable.refresh())
-                this.$swal('Deleted', 'success')
+                this.$swal('Deleted', 'You successfully deleted this Donation ' + JSON.stringify(response.data, null, 5), 'success')
               })
               .catch(error => {
-                this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error');
-                this.errors.push(error);
+                this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error')
+                this.errors.push(error)
                 console.log(error)
               })
           } else {
-            console.log('SWAL Else Result : ' + result.value)
-            this.$swal('Cancelled', 'Your Team is still there!', 'info')
+            this.$swal('Cancelled', 'Your Donation still Counts!', 'info')
           }
-        })
-      },
+        })*/
       editTeam: function (id) {
         this.$router.params = id;
         this.$router.push('editTeam')
