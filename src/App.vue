@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="backgroundPic">
     <b-navbar toggleable="md" variant="dark" type="dark">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <img src="./assets/rugbyBall.png" width="50px" height="50px" class="img-circle" style="padding: 5px">
@@ -39,5 +39,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   overflow: hidden;
+}
+
+.backgroundPic
+{
+  width: 1579px;
+  height: 1080px;
+  background-size: 1579px 1080px;
+  background: url("assets/rugby-background-9.jpg") fixed;
 }
 </style>
