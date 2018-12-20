@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueSweetAlert2 from 'vue-sweetalert2'
 import firebase from 'firebase'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
@@ -25,6 +26,13 @@ var config = {
 };
 
 firebase.initializeApp(config);
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyAXPwTg-OtoXn7xatHTFWXghqB5CD2GqFQ",
+    libraries: 'places'
+  }
+});
 
 
 firebase.auth().onAuthStateChanged(() => {

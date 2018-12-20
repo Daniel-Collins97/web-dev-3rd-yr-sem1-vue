@@ -102,6 +102,7 @@
               pitchAge: this.pitchAge
             };
             console.log('Submitting in Pitch Form : ' + JSON.stringify(this.pitch, null, 5));
+            console.log('Location : ' + JSON.stringify(this.pitch.pitchLocation, null, 5));
             this.$emit('pitch-is-created-updated', this.pitch)
           }, 500)
         }

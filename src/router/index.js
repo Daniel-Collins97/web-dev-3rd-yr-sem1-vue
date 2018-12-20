@@ -13,6 +13,7 @@ import editPitch from '@/components/editPitch'
 import login from '@/components/login'
 import signUp from '@/components/signUp'
 import firebase from 'firebase'
+import map from '@/components/googleMap'
 
 Vue.use(Router);
 
@@ -116,6 +117,15 @@ const router = new Router({
       name: 'SignUp',
       component: signUp,
       props: true
+    },
+    {
+      path: '/map',
+      name: 'Map',
+      component: map,
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
     }
     ]
 });

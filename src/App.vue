@@ -17,6 +17,7 @@
                 <b-dropdown-item to="/addPlayers"><i class="fa fa-plus" style="padding: 5px"> Add Players</i></b-dropdown-item>
                 <b-dropdown-item to="/addPitch"><i class="fa fa-plus" style="padding: 5px"> Add Pitches</i></b-dropdown-item>
             </b-nav-item-dropdown>
+          <b-nav-item to="/map"><i class="fa fa-globe" style="padding: 5px"> map</i></b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown id="nav7_ddown" text="Members" extra-toggle-classes="nav-link-custom" right>
