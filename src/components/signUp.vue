@@ -1,11 +1,11 @@
 <template>
   <div class="signUp">
-    <h3>Sign Up</h3>
+    <h1>Sign Up</h1>
     <input type="text" v-model="firstName" placeholder="First Name"><br/>
     <input type="text" v-model="lastName" placeholder="Last Name"><br/>
     <input type="text" v-model="email" placeholder="Email"><br/>
     <input type="password" v-model="password" placeholder="Password"><br/>
-    <button @click="signUp">Create account</button>
+    <button class="btn btn-primary btn1" @click="signUp">Create account</button>
   </div>
 </template>
 
@@ -23,15 +23,23 @@
       }
     },
     methods: {
-      signUp: function() {
-        firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(this.email, this.password).then(
-          function (user) {
-            this.$swal('Congratulations!', 'Your account had been created!', 'success')
-          },
-          function (err) {
-            this.$swal('Oops!', "That didn't work...", 'info')
-          }
-        )
+      signUp: function () {
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+          .then(()=>{
+            console.log('Signup successful.');
+            this.$swal('Congratulations!', 'Your account had been created!', 'success');
+            this.$router.push('/')
+          })
+          .catch((error)=> {
+            this.$swal({
+              title: 'Oops!',
+              text: error.message,
+              type: 'info',
+              showCancelButton: false,
+            });
+            console.log(error.code);
+            console.log(error.message);
+          });
       }
     }
   }
@@ -39,7 +47,13 @@
 
 <style scoped>
   .signUp {
-    margin-top: 40px
+    margin-top: 40px;
+    color: white;
+    text-shadow:
+      -1px -1px 0 rgb(0,0,0),
+      1px -1px 0 rgb(0,0,0),
+      -1px 1px 0 rgb(0,0,0),
+      1px 1px 0 rgb(0,0,0);
   }
 
   input {
@@ -59,4 +73,10 @@
     margin-top: 20px;
     font-size: 11px;
   }
+
+  .btn1 {
+    width: 300px;
+    font-size: x-large;
+  }
+
 </style>

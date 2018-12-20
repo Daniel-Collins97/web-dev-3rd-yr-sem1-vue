@@ -12,63 +12,98 @@ import editPlayer from '@/components/editPlayer'
 import editPitch from '@/components/editPitch'
 import login from '@/components/login'
 import signUp from '@/components/signUp'
+import firebase from 'firebase'
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
+    {
+      path: '*',
+      redirect: '/login'
+    },
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/teams',
       name: 'Teams',
-      component: Teams
+      component: Teams,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/players',
       name: 'Players',
-      component: Players
+      component: Players,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/pitches',
       name: 'Pitches',
-      component: Pitches
+      component: Pitches,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/addTeams',
       name: 'AddTeam',
-      component: addTeam
+      component: addTeam,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/addPlayers',
       name: 'AddPlayer',
-      component: addPlayer
+      component: addPlayer,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/addPitch',
       name: 'AddPitch',
-      component: addPitch
+      component: addPitch,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/editTeam',
       name: 'EditTeam',
       component: editTeam,
-      props: true
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/editPlayer',
       name: 'EditPlayer',
       component: editPlayer,
-      props: true
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/editPitch',
       name: 'EditPitch',
       component: editPitch,
-      props: true
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',
@@ -83,4 +118,17 @@ export default new Router({
       props: true
     }
     ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !currentUser) {
+    next('login');
+  }
+  else if (!requiresAuth && currentUser) next('home');
+  else next();
+});
+
+export default router;

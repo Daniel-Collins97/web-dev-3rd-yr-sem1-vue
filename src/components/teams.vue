@@ -71,63 +71,29 @@
           })
       },
       deleteTeam: function (id) {
-        this.$swal({
-          title: 'Are you sure?',
-          text: 'You can\'t Undo this action',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'OK Delete it',
-          cancelButtonText: 'Cancel',
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        }).then(success => {
-
-          if (success) {
+        this.$swal({title: 'Are you sure?', text: 'You can\'t Undo this action', type: 'question', showCancelButton: true, confirmButtonText: 'OK Delete it', cancelButtonText: 'Cancel', showCloseButton: true, showLoaderOnConfirm: true
+        }).then((result) => {
+          console.log('SWAL Result : ' + result);
+          if (result) {
             teamService.deleteTeam(id)
-              .then((response) => {
-                this.message = response.data;
-                console.log(this.message);
-                this.loadTeams();
-                Vue.nextTick(() => this.$refs.vuetable.refresh())
-                this.$swal('Deleted', 'Team Go  Bye Bye...', 'success')
-              }).catch((response) => {
-              // do something with response (it failed)
-              console.log(response);
-            });
+              .then(response => {
+                if (response) {
+                  // JSON responses are automatically parsed.
+                  this.message = response.data;
+                  console.log(this.message);
+                  this.loadTeams();
+                  // Vue.nextTick(() => this.$refs.vuetable.refresh())
+                  this.$swal('Deleted', 'You successfully deleted this Team', 'success');
+                } else {
+                  this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error');
+                }
+              })
+          } else {
+            console.log(result.dismiss);
+            this.$swal('Cancelled', 'Your Player is still there', 'info')
           }
         });
       },
-      /*      deleteTeam: function (id) {
-        this.$swal({
-          title: 'Are you sure?',
-          text: 'You can\'t Undo this action',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'OK Delete it',
-          cancelButtonText: 'Cancel',
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        }).then((result) => {
-          console.log('SWAL Result : ' + result)
-          if (result.value === true) {
-            teamService.deleteTeam(id)
-              .then(response => {
-                // JSON responses are automatically parsed.
-                this.message = response.data
-                console.log(this.message)
-                this.loadTeams()
-                // Vue.nextTick(() => this.$refs.vuetable.refresh())
-                this.$swal('Deleted', 'You successfully deleted this Donation ' + JSON.stringify(response.data, null, 5), 'success')
-              })
-              .catch(error => {
-                this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error')
-                this.errors.push(error)
-                console.log(error)
-              })
-          } else {
-            this.$swal('Cancelled', 'Your Donation still Counts!', 'info')
-          }
-        })*/
       editTeam: function (id) {
         this.$router.params = id;
         this.$router.push('editTeam')

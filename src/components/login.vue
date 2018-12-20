@@ -1,10 +1,11 @@
 <template>
   <div class="login">
-    <h3>Sign In</h3>
-    <input type="text" placeholder="Email"><br/>
-    <input type="password" placeholder="Password"><br/>
-    <button>Connection</button>
-    <p>Dont have an account?</p>
+    <h1>Sign In</h1>
+    <input type="text" v-model="email" placeholder="Email"><br/>
+    <input type="password" v-model="password" placeholder="Password"><br/>
+    <button class="btn btn-primary btn1" @click="login">Log In</button><br/><br/>
+    <h3>Dont have an account?</h3>
+    <h3><router-link to="/signUp" class="signup"><button class="btn btn-primary btn2">Sign-Up</button></router-link></h3>
   </div>
 </template>
 
@@ -20,15 +21,21 @@
       }
     },
     methods: {
-      login : function() {
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-          function (user) {
-            alert('Well Done')
-          },
-          function(err) {
-            alert('Oops, something went wrong...')
-          }
-        )
+      login: function () {
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+          .then(()=>{
+            this.$router.push('/')
+          })
+          .catch((error)=> {
+            this.$swal({
+              title: 'Oops!',
+              text: error.message,
+              type: 'error',
+              showCancelButton: false,
+            });
+            console.log(error.code);
+            console.log(error.message);
+          });
       }
     }
   }
@@ -36,7 +43,13 @@
 
 <style scoped>
   .login {
-    margin-top: 40px
+    margin-top: 40px;
+    color: white;
+    text-shadow:
+      -1px -1px 0 rgb(0,0,0),
+      1px -1px 0 rgb(0,0,0),
+      -1px 1px 0 rgb(0,0,0),
+      1px 1px 0 rgb(0,0,0);
   }
 
   input {
@@ -51,13 +64,20 @@
     cursor: pointer;
   }
 
-  p {
-    margin-top: 40px;
-    font-size: 13px;
+  .btn1 {
+    width: 300px;
+    font-size: x-large;
   }
 
-  p a {
-    text-decoration: underline;
-    cursor: pointer;
+  .btn2 {
+    width: 150px;
+    font-size: large;
   }
+
+  .signup {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+  }
+
 </style>

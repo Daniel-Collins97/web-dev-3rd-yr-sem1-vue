@@ -23,7 +23,7 @@
                 <b-dropdown-item to="/login"><i class="fa fa-sign-in" style="padding: 5px"> Login </i></b-dropdown-item>
                 <b-dropdown-item to="/signUp"><i class="fa fa-plus-circle" style="padding: 5px"> SignUp </i></b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item to="/logout"><i class="fa fa-sign-out" style="padding: 5px"> Logout </i></b-dropdown-item>
+                <b-dropdown-item @click="logout"><i class="fa fa-sign-out" style="padding: 5px"> Logout </i></b-dropdown-item>
             </b-nav-item-dropdown>
           <i class="fa fa-pied-piper-alt fa-1x" style="padding: 5px; color: white;"></i>
         </b-navbar-nav>
@@ -34,9 +34,19 @@
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  import firebase from 'firebase'
+
+  export default {
+    name: 'App',
+    methods: {
+      logout: function () {
+        firebase.auth().signOut().then(() => {
+          this.$swal('Logged Out', 'You have been logged out successfully!', 'success');
+          this.$router.push('login')
+        })
+      }
+    }
+  }
 </script>
 
 <style>

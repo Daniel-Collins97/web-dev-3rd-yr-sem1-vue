@@ -64,36 +64,28 @@
           })
       },
       deletePitch: function (id) {
-        this.$swal({
-          title: 'Are you sure?',
-          text: 'You can\'t Undo this action',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'OK, Delete',
-          cancelButtonText: 'Cancel',
-          showCloseButton: true,
-          showLoaderOnConfirm: true
+        this.$swal({title: 'Are you sure?', text: 'You can\'t Undo this action', type: 'warning', showCancelButton: true, confirmButtonText: 'OK Delete it', cancelButtonText: 'Cancel', showCloseButton: true, showLoaderOnConfirm: true
         }).then((result) => {
           console.log('SWAL Result : ' + result);
-          if (result.value) {
+          if (result) {
             pitchService.deletePitch(id)
               .then(response => {
-                // JSON responses are automatically parsed.
-                this.message = response.data;
-                console.log(this.message);
-                this.loadPitches();
-                // Vue.nextTick(() => this.$refs.vuetable.refresh())
-                this.$swal('Deleted','success')
-              })
-              .catch(error => {
-                this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error');
-                this.errors.push(error);
-                console.log(error)
+                if (response) {
+                  // JSON responses are automatically parsed.
+                  this.message = response.data;
+                  console.log(this.message);
+                  this.loadPitches();
+                  // Vue.nextTick(() => this.$refs.vuetable.refresh())
+                  this.$swal('Deleted', 'You successfully deleted this Pitch', 'success');
+                } else {
+                  this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error');
+                }
               })
           } else {
-            this.$swal('Cancelled', 'Your Pitch is still There!', 'info')
+            console.log(result.dismiss);
+            this.$swal('Cancelled', 'Your Pitch is still there!', 'info')
           }
-        })
+        });
       },
       editPitch: function (id) {
         this.$router.params = id;

@@ -9,6 +9,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueSweetAlert2 from 'vue-sweetalert2'
 import firebase from 'firebase'
 
+Vue.config.productionTip = false;
+Vue.use(BootstrapVue);
+Vue.use(VueSweetAlert2);
+
+let app = '';
+
 var config = {
   apiKey: "AIzaSyAzS4Nf4xINUVOCMyu0GGSeMPJsVfs7AUI",
   authDomain: "vue-proj-b3032.firebaseapp.com",
@@ -20,14 +26,15 @@ var config = {
 
 firebase.initializeApp(config);
 
-Vue.config.productionTip = false;
-Vue.use(BootstrapVue);
-Vue.use(VueSweetAlert2);
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    console.log(firebase.auth().currentUser);
+    app = new Vue({
+      el: '#app',
+      router,
+      components: {App},
+      template: '<App/>',
+    })
+  }
 });
