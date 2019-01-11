@@ -10,11 +10,11 @@
           <p>Teams, Players, Pitches all in the one place!</p>
           <div class="container">
             <i class="fa fa-plus-circle image"></i>
-              <div class="overlay">
-                <router-link to="/addPlayers" class="icon" title="Plus Icon">
-                  <i class="fa fa-plus"></i>
-                </router-link>
-              </div>
+            <div class="overlay">
+              <router-link to="/addPlayers" class="icon" title="Plus Icon">
+                <i class="fa fa-plus"></i>
+              </router-link>
+            </div>
           </div>
           <p>Just click the Image above to get started<br/>Adding players!<br/><br/><br/></p>
         </td>
